@@ -1,0 +1,26 @@
+---
+title: "fon_neiman"
+output: html_document
+---
+Зададим вектор чисел
+```{r}
+num<-c(50:200)
+```
+
+Функция для расчетв суммы по алгоритму Фон-Неймана
+```{r}
+fon<-function(z) {
+  n<-z
+  x<-length(n)%/%2
+  if (x==0) {
+    return(n[1])
+  } else {
+    s_1<-fon(n[1:x])
+    s_2<-fon(n[(x+1):length(n)])
+    return(s_1+s_2)
+  }
+}
+(fon(num))
+```
+
+

@@ -1,0 +1,62 @@
+---
+title: "irises"
+output: html_document
+---
+
+```{r}
+library(bigmemory)
+library(biganalytics)
+```
+
+Фактическая матрица значений
+```{r}
+s<-1:150
+sa<-rep(s,10000)
+big_i<-(iris[sa,])
+```
+Скорректированная матрица значений
+```{r}
+r_1<-rnorm(1500000,0.03,0.02)
+r_2<-rnorm(1500000,0.03,0.02)
+r_3<-rnorm(1500000,0.03,0.02)
+r_4<-rnorm(1500000,0.03,0.02)
+e<-(cbind(r_1,r_2,r_3,r_4))
+big_e<-cbind((big_i[1:4]+e),big_i$Species)
+```
+
+
+```{r}
+b_i<-as.big.matrix(big_e)
+```
+
+```{r}
+kmb<-bigkmeans(b_i,3,iter.max = 10000,nstart = 1)
+```
+```{r}
+library(dbscan)
+rownames(big_e)<-c(1:1500000)
+```
+
+```{r}
+rezultat_km<-list()
+rezultat_db<-list()
+km<-function(x,k,iterat) {
+  for (it in 1:iterat) {
+    i<-sample(1:1500000,150,replace=F)
+    x_i<-x[i,]
+    km_i<-kmeans(x_i[,-5],k)
+    db_i<-dbscan(x_i[,-5],0.5,20)
+    
+  }
+}
+km(big_e,3,10)
+```
+
+случайная выборка 150 наблюдений из всех (определим вектор с индексами наблючений случайным образом)
+```{r}
+i<-sample(1:1500000,150,replace=F)
+x_i<-big_e[i,]
+x_i
+km_i<-kmeans(x_i[,-5],centers=3)
+```
+
