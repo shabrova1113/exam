@@ -1,0 +1,263 @@
+---
+title: "задача форда"
+output: html_document
+---
+С повторениями:
+```{r}
+d<-5
+t<-0
+o<-0
+n<-0
+a<-0
+r<-0
+l<-0
+g<-0
+e<-0
+b<-0
+otv<-list()
+res<-list()
+p<-1
+for (o in (0:9)) {
+  for (n in (0:9)) {
+    for (a in (0:9)) {
+      for (r in (0:9)) {
+        for (l in (0:9)) {
+          for (g in (0:9)) {    
+            for (e in (0:9)) {
+              for (b in (0:9)) {                              
+                 if ((2*d+l*20+a*200+(n+r)*1000+(o+e)*10000+(d+g)*100000)==(t+r*10+e*100+b*1000+o*10000+r*100000)) {
+                  otv<-list('d'=d, 't'=t, 'o'=o,'n'=n, 'a'=a, 'r'=r, 'l'=l, 'g'=g, 'e'=e, 'b'=b)
+                  res[[p]]<-otv
+                  p<-p+1
+                } 
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+(res[[1]])
+l<-length(res)
+(q<-sample(1:490,1))
+l
+(res[[122]])
+```
+Без повторений:
+```{r}
+d<-5
+t<-0
+o<-0
+n<-0
+a<-0
+r<-0
+l<-0
+g<-0
+e<-0
+b<-0
+otv1<-list()
+res1<-list()
+p<-1
+for (o in (0:9)) {
+  if (o!=d & o!=t) {
+    for (n in (0:9)) {
+    if (n!=d & n!=o & n!=t) {
+      for (a in (0:9)) {
+        if (a!=o & a!=n & a!=d & a!=t){
+          for (r in (0:9)) {
+            if(r!=o& r!=n & r!=a & r!=d & r!=t) {
+              for (l in (0:9)) {
+                if (l!=o & l!=n & l!=a & l!=r & l!=d & l!=t) {
+                  for (g in (0:9)) {
+                    if (g!=o & g!=n & g!=a & g!=r & g!=l & g!=d & g!=t) {
+                      for (e in (0:9)) {
+                        if (e!=o & e!=n & e!=a & e!=r & e!=l & e!=g & e!=d & e!=t) {
+                          for (b in (0:9)) {
+                            if (b!=o & b!=n & b!=a & b!=r & b!=l & b!=g & b!=e & b!=d & b!=t) {
+                              if ((2*d+l*20+a*200+(n+r)*1000+(o+e)*10000+(d+g)*100000)==(t+r*10+e*100+b*1000+o*10000+r*100000)) {
+                  otv1<-list('d'=d, 't'=t, 'o'=o,'n'=n, 'a'=a, 'r'=r, 'l'=l, 'g'=g, 'e'=e, 'b'=b)
+                  res1[[p]]<-otv1
+                  p<-p+1
+                } 
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+              }}}}}}}}}
+(res1)
+l1<-length(res1)
+l1
+```
+Первое решение (с повторениями):
+```{r}
+d<-5
+t<-0
+o<-0
+n<-0
+a<-0
+r<-0
+l<-0
+g<-0
+e<-0
+b<-0
+otv3<-list()
+res3<-list()
+p<-1
+for (o in (0:9)) {
+  for (n in (0:9)) {
+    for (a in (0:9)) {
+      for (r in (0:9)) {
+        for (l in (0:9)) {
+          for (g in (0:9)) {    
+            for (e in (0:9)) {
+              for (b in (0:9)) {                              
+                 if ((2*d+l*20+a*200+(n+r)*1000+(o+e)*10000+(d+g)*100000)==(t+r*10+e*100+b*1000+o*10000+r*100000)){
+                  otv3<-list('d'=d, 't'=t, 'o'=o,'n'=n, 'a'=a, 'r'=r, 'l'=l, 'g'=g, 'e'=e, 'b'=b)
+                  break
+                } 
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+(otv3)
+```
+
+универсальное решение
+```{r}
+d<-5
+t<-0
+o<-0
+n<-0
+a<-0
+r<-0
+l<-0
+g<-0
+e<-0
+b<-0
+otv4<-list()
+res4<-list()
+p<-1
+for (o in (1:9)) {
+  if (o!=d & o!=t) {
+    for (n in (1:9)) {
+      if (n!=d & n!=o & n!=t) {
+        for (a in (0:9)) {
+          if (a!=o & a!=n & a!=d & a!=t){
+            for (r in (0:9)) {
+              if(r!=o& r!=n & r!=a & r!=d & r!=t) {
+                for (l in (0:9)) {
+                  if (l!=o & l!=n & l!=a & l!=r & l!=d & l!=t) {
+                    for (g in (0:9)) {
+                      if (g!=o & g!=n & g!=a & g!=r & g!=l & g!=d & g!=t) {
+                        for (e in (0:9)) {
+                          if (e!=o & e!=n & e!=a & e!=r & e!=l & e!=g & e!=d & e!=t) {
+                            for (b in (0:9)) {
+                              if (b!=o & b!=n & b!=a & b!=r & b!=l & b!=g & b!=e & b!=d & b!=t) {
+                            if((2*d+l*20+a*200+(n+r)*1000+(o+e)*10000+(d+g)*100000)==(t+r*10+e*100+b*1000+o*10000+r*100000)) {otv4<-list('d'=d, 't'=t, 'o'=o,'n'=n, 'a'=a, 'r'=r, 'l'=l, 'g'=g, 'e'=e, 'b'=b)
+                  res4[[p]]<-otv4
+                  p<-p+1
+                } 
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+                }}}}}}}}}
+(res4)
+l4<-length(res4)
+l4
+```
+
+Анастасия+Оксана=Екатерина
+```{r}
+n_1<-c('а','н','а','с','т','а','с','и','я')
+n_2<-c('о','к','с','а','н','а')
+n_3<-c('е','к','а','т','е','р','и','н','а')
+```
+
+```{r}
+(n<-c(n_1,n_2,n_3))
+u<-unique(n)
+u
+l<-length(u)
+l
+```
+```{r}
+l1<-length(n_1)
+l2<-length(n_2)
+l3<-length(n_3)
+```
+
+```{r}
+in1<-data.frame(n_1,0)
+in2<-data.frame(n_2,0)
+in3<-data.frame(n_3,0)
+input<-data.frame(u,0)
+```
+
+```{r}
+otv5<-list()
+res5<-list()
+p<-1
+
+```
+
+
+```{r}
+otv5<-list()
+res5<-list()
+pi<-1
+а<-0
+н<-0
+с<-0
+т<-0
+и<-0
+я<-0
+о<-0
+к<-0
+е<-0
+р<-0
+for (o in (0:9)) {
+  if (o!=d & o!=t) {
+    for (n in (0:9)) {
+      if (n!=d & n!=o & n!=t) {
+        for (a in (0:9)) {
+          if (a!=o & a!=n & a!=d & a!=t){
+            for (r in (0:9)) {
+              if(r!=o& r!=n & r!=a & r!=d & r!=t) {
+                for (l in (0:9)) {
+                  if (l!=o & l!=n & l!=a & l!=r & l!=d & l!=t) {
+                    for (g in (0:9)) {
+                      if (g!=o & g!=n & g!=a & g!=r & g!=l & g!=d & g!=t) {
+                        for (e in (0:9)) {
+                          if (e!=o & e!=n & e!=a & e!=r & e!=l & e!=g & e!=d & e!=t) {
+                            for (b in (0:9)) {
+                              if (b!=o & b!=n & b!=a & b!=r & b!=l & b!=g & b!=e & b!=d & b!=t) {
+                            if((2*d+l*20+a*200+(n+r)*1000+(o+e)*10000+(d+g)*100000)==(t+r*10+e*100+b*1000+o*10000+r*100000)) {otv5<-list('d'=d, 't'=t, 'o'=o,'n'=n, 'a'=a, 'r'=r, 'l'=l, 'g'=g, 'e'=e, 'b'=b)
+                  res5[[p]]<-otv5
+                  pi<-pi+1
+                } 
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+                }}}}}}}}}
+(res5)
+l5<-length(res5)
+l5
+```
+
+
