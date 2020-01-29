@@ -1,0 +1,464 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[32]:
+
+
+import multiprocessing
+import numpy as np
+import pandas as pd
+
+def generate():
+    for x in range(10):
+        yield(x)
+def fromiter(gen):
+    a=generate()
+    Z=np.fromiter(a,dtype=float, count=-1)
+    return Z
+if __name__=='__main__':
+    with multiprocessing.Pool(3) as pool:
+        a=pool.map(fromiter,(1,1,1))
+        
+        a=np.concatenate((a[0],a[1],a[2]))
+        print(a)
+
+
+# In[72]:
+
+
+#26. NumPy
+a1=0
+a2=1/3
+a3=2/3
+b1=1/3
+b2=2/3
+b3=1
+n1=10//3
+n2=10//3
+n3=10-n1-n2
+def p1(a,b,n):
+    v1 = np.linspace(start=a, stop=b, num=n)[1:-1]
+    print(v1)
+
+procs =[multiprocessing.Process(target=p1, args=(a1,b1,n1+2)), multiprocessing.Process(target=p1, args=(a2,b2,n2+2)), multiprocessing.Process(target=p1, args=(a3,b3,n3+2))]
+for proc in procs:
+    proc.start()
+for proc in procs:
+    proc.join()
+
+
+# In[68]:
+
+
+#25. NumPy
+
+import multiprocessing
+import numpy as np
+
+n3=10
+
+def generate (a,b,t):
+    for x in range (a,b,t):
+        yield x
+
+t=1
+n1=10//3
+n2=n1+10//3        
+
+def fromiter_ (y):
+    y=generate (y[0],y[1],y[2])
+    Z=np.fromiter(y, dtype=float,count=-1)
+    return Z
+
+if __name__=='__main__':
+    with multiprocessing.Pool(3) as pool:
+        y=pool.map(fromiter_,[(0,n1,t),(n1,n2,t),(n2,n3,t)])
+        
+y=np.concatenate((y[0],y[1],y[2]))
+print(y)
+
+
+# In[27]:
+
+
+v = np.random.random(size=[10])
+print(v)
+print()
+v = np.sort(a=v, axis=0)
+print(v)
+
+
+# In[130]:
+
+
+# 27. Отсортировать вектор
+n=10
+v = np.random.random(size=[n])
+print(v)
+print()
+n1=n//3
+n2=(n//3)*2
+n3=n-n1-n2
+def sort (v1):
+    s=np.sort(a=v1,axis=0)
+    print(s)
+
+if __name__=='__main__':
+    with multiprocessing.Pool(3) as pool:
+        a=pool.map(sort,(v[0:n1],v[n1:n2],v[n2:n]))
+        
+        a=np.sort((a[0],a[1],a[2]))
+        print(a) 
+
+
+# In[ ]:
+
+
+procs = [multiprocessing.Process(target=sort, args=(v[0:n1])), multiprocessing.Process(target=sort, args=(v[n1+1:n2])), multiprocessing.Process(target=sort, args=v[n3:n])]
+for proc in procs:
+    proc.start()
+for proc in procs:
+    proc.join()
+    
+
+
+# In[50]:
+
+
+v = np.random.random(size=[5])
+print(v)
+print(v[0:5])
+
+
+# In[ ]:
+
+
+a = np.array([1,2,3,4,5])
+b = np.array([1,2,3,4,5])
+print('вариант 1')
+print(np.array_equal(a,b))
+print()
+print('вариант 2')
+print(np.allclose(a,b))
+
+
+# In[131]:
+
+
+# 28. Проверить, одинаковы ли 2 NumPy массива
+
+n=10
+n1=n/2
+n2=n-n1
+
+def compare (array_list):
+    equal = np.allclose(array_list[0], array_list[1])
+    return equal
+
+if __name__=='__main__':
+    array1 = np.array([1,2,3,4,5])
+    array2 = np.array([1,2,3,4,5])
+    Len=len(array1)
+                    
+    with multiprocessing.Pool(3) as pool:
+        Res = pool.map(compare, [(array1[0:Len/3], array2[0:Len/3]), (array1[Len/3:Len*2/3], array2[Len/3:Len*2/3]), (array1[Len*2/3:], array2[Len*2/3:])])
+
+Print(res[0] and res[1] and res[2])
+
+
+# In[135]:
+
+
+def compare (array_list):
+    equal = np.allclose(array_list[0], array_list[1]
+    return(equal)
+
+Array1 = a()
+Array2 = a()
+                    
+with multiprocessing.Pool(3) as pool:
+    Res = pool.map(compare, [(array1[0:Len/3], array2[0:Len/3]), (array1[Len/3:Len*2/3], array2[Len/3:Len*2/3]), (array1[Len*2/3:], array2[Len*2/3:])])
+
+Print(res[0] and res[1] and res[2])
+
+
+# In[101]:
+
+
+Z = np.zeros(10)
+print(type (Z))
+Z.flags.writeable = False
+print(Z)
+print(type(Z))
+
+
+# In[106]:
+
+
+# 29. Сделать массив неизменяемым
+
+n0=10
+n1=n/3
+n2=n1+n/3
+n3=n-n1-n2
+
+def vec(n):
+    Z=int(np.zeros(n))
+    return Z
+
+if __name__=='__main__':
+    with multiprocessing.Pool(3) as pool:
+        rez=pool.map(vec,(3,3,4))
+print(res)
+
+
+# In[111]:
+
+
+#36 Pandas
+
+import pandas as pd
+import numpy as np
+import multiprocessing
+
+test_list = 'ANASTASIYA'
+test_array = np.arange(len(my_list))
+dict_test = dict(zip(test_list, test_array))
+my_series = pd.Series(dict_test)
+
+my_dataframe = pd.DataFrame()
+
+series_split = np.split(my_series, [len(my_series)//3, len(my_series)-(len(my_series)//3)])
+for i, sub_series in enumerate(series_split):
+    globals()["sub_series%d"%i] = sub_series
+
+def train(data):
+    new_dataframe = data.to_frame().reset_index()
+    return(new_dataframe)  
+
+with multiprocessing.Pool(3) as pool:
+    result = pool.map(train, [sub_series0, sub_series1, sub_series2])
+my_dataframe = my_dataframe.append(result)
+print(my_dataframe)
+
+
+# In[119]:
+
+
+#37 Pandas
+data = pd.read_csv('Documents/мага/aptm1.csv', delimiter=';',nrows=20)
+
+def ex_1(data_1):
+    print('\n', 'Формат столбцов:')
+    print(data_1.dtypes)
+    
+process1 = multiprocessing.Process(target=ex_1, args=(data,))
+    
+def ex_2(data_2):
+    print('\n', 'Форма:')
+    print(data_2.shape)
+    
+process2 = multiprocessing.Process(target=ex_2, args=(data,))
+    
+def ex_3(data_3):
+    print('\n', 'Общая статистика')
+    print(data_3.describe())
+    
+process3 = multiprocessing.Process(target=ex_3, args=(data,))
+
+if __name__ == '__main__':
+    process1.start()
+    process1.join()
+    process2.start()
+    process2.join()
+    process3.start()
+    process3.join()
+
+
+# In[142]:
+
+
+# 38.(исходный) Получить данные из DataFrame по условию
+import random
+import pandas as pd
+import numpy as np
+import multiprocessing
+
+s = 'abcdefghijklmnopqrstuvwxyz'
+
+# создаем DataFrame из рандомных цифр
+df = pd.DataFrame(np.random.randint(low=1, high=10, size=[3,5]))
+
+# добавляем столбец букв
+df = pd.concat([df, pd.DataFrame({'letter': ['a', 'b', 'c']})], axis=1)
+
+# добавляем столбец рандомных букв
+df = pd.concat([df, pd.DataFrame({'r_letter': [random.choice(s) for i in range(len(df))]})], axis=1)
+
+print('сформированный DataFrame:')
+print(df)
+print()
+
+# -------------------------------------------------------------------------------------------------
+
+# получаем номер строки и столбца (индексацию) по условию
+row, col = np.where(df.values == 5)
+print('индексы строк и столбцов:')
+print(row)
+print(col)
+print()
+
+# получаем данные по индексации (подобно индексации в матрице)
+if (row.size != 0) and (col.size != 0):
+    print('данные по индексации (строка, столбец):')
+    print(df.iat[row[0], col[0]])
+    print(df.iloc[row[0], col[0]])
+    print()
+
+# получаем данные по индексации и именованому объекту (смешанный тип)
+if (row.size != 0) and (col.size != 0):
+    print('данные по индексации и наименованию:')
+    print(df.at[row[0], 1])
+    print(df.at[row[0], 'letter'])
+    print()
+    
+# получаем по условию столбцы и строки DataFrame
+# (loc;at - принимают строки(столбцы) с определенными метками из индекса (именованные метки))
+# (iloc, iat) - принимают номера строк и столбцов
+ans1 = df.loc[df['letter'] == 'a']
+print('данные по условию:')
+print(ans1)
+
+
+# In[175]:
+
+
+#38. Pandas
+import random
+import pandas as pd
+import numpy as np
+import multiprocessing
+
+s = 'abcdefghijklmnopqrstuvwxyz'
+
+
+# создаем DataFrame из рандомных цифр
+df = pd.DataFrame(np.random.randint(low=1, high=10, size=[3,5]))
+
+process1 = multiprocessing.Process(target=s)
+process2 = multiprocessing.Process(target=df)
+if __name__ == '__main__':
+    process1.start()
+    process2.start()
+    process1.join()
+    process2.join()
+
+# добавляем столбец букв
+df = pd.concat([df, pd.DataFrame({'letter': ['a', 'b', 'c']})], axis=1)
+
+# добавляем столбец рандомных букв
+df = pd.concat([df, pd.DataFrame({'r_letter': [random.choice(s) for i in range(len(df))]})], axis=1)
+row, col = np.where(df.values == 5)
+print('сформированный DataFrame:')
+print(df)
+print()
+
+row, col = np.where(df.values == 5)
+print('индексы строк и столбцов:')
+print(row)
+print(col)
+print()
+
+# получаем данные по индексации (подобно индексации в матрице)
+def ind(df,col,row):
+    if (row.size != 0) and (col.size != 0):
+        print('данные по индексации (строка, столбец):')
+        print(df.iat[row[0], col[0]])
+        print(df.iloc[row[0], col[0]])
+
+
+
+# получаем данные по индексации и именованому объекту (смешанный тип)
+def na_ind(df,col,row):
+    if (row.size != 0) and (col.size != 0):
+        print('данные по индексации и наименованию:')
+        print(df.at[row[0], 1])
+        print(df.at[row[0], 'letter'])
+
+# получаем по условию столбцы и строки DataFrame
+# (loc;at - принимают строки(столбцы) с определенными метками из индекса (именованные метки))
+# (iloc, iat) - принимают номера строк и столбцов
+def an1(df):
+    ans1 = df.loc[df['letter'] == 'a']
+    print('данные по условию:')
+    print(ans1)
+
+procs = [multiprocessing.Process(target=ind, args=(df,col,row)), multiprocessing.Process(target=na_ind, args=(df,col,row)), multiprocessing.Process(target=an1, args=(df))]
+for proc in procs:
+    proc.start()
+for proc in procs:
+    proc.join()
+
+
+# In[ ]:
+
+
+# 39.(исходный) Изменить данные столбца DataFrame по условию (по многим условиям)
+
+# загружаем данные (только 10 строк)
+df = pd.read_csv('https://raw.githubusercontent.com/Grossmend/CSV/master/titanic/data.csv', nrows=10)
+
+
+# определим функцию для изменения значений в столбце
+def change_values(val):
+    
+    """ тестовая функция измененения значений """
+    
+    # проверка на числовой тип входящей переменной
+    try:
+        float(val)
+    except Exception as e:
+        return val
+    
+    # условия изменения значений
+    if val > 25:
+        return 'High'
+    elif val < 25:
+        return 'Low'
+    
+col_df = df['Age'].apply(change_values)
+col_df
+
+
+# In[169]:
+
+
+#39. Pandas
+
+df=pd.read_csv('Documents/мага/aptm1.csv', delimiter=';', nrows=10)
+#определить функцию для изменения значений в столбце
+def change_values(val):
+    """"тестовая функция изменения значений"""
+    #проверка на числовой тип входящей переменной
+    try:
+        float(val)
+    except Exception as e:
+        return val
+    
+    #условия изменения значений
+    if val>-0.0025:
+        return 'High'
+    elif val<-0.0025:
+        return 'Low'
+
+def col_i(c):
+  changed_data = df.iloc[c].apply(change_values)
+  return changed_data
+
+if __name__ == '__main__':
+  with multiprocessing.Pool(3) as p:
+      result = p.map(col_i, (0,1,2))
+
+result = pd.concat(result)
+print(result)    
+
